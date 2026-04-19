@@ -1,0 +1,70 @@
+{"exerciseLibrary": [
+  {
+    "name": "bench press",
+    "description": "Classic chest enlarger",
+    "imagePath": "/ExerciseImages/benchpress.png",
+    "sets": [
+    {
+      "reps": 10,
+      "weight": 50
+    }]
+  },
+  {
+    "name": "squats",
+    "description": "Great preparation for Prisiadki",
+    "imagePath": "/ExerciseImages/squats.png",
+    "sets": [
+    {
+      "reps": 10,
+      "weight": 100
+    },
+    {
+      "reps": 10,
+      "weight": 120
+    }]
+  },
+  {
+    "name": "dips",
+    "description": "to your chips",
+    "sets": []
+  },
+  {
+    "name": "chins",
+    "description": "Grow your wings",
+    "sets": [
+      {
+        "reps": 10,
+        "weight": 20
+      },
+      {
+        "reps": 10,
+        "weight": 20
+      },
+      {
+        "reps": 10,
+        "weight": 20
+      },
+      {
+        "reps": 10,
+        "weight": 20
+      }]
+  },
+  {
+    "name": "deadlift",
+    "description": "Lift from dead position, no bounce",
+    "imagePath": "/ExerciseImages/deadlift.png",
+    "sets": [
+      {
+        "reps": 15,
+        "weight": 127.5
+      },
+      {
+        "reps": 10,
+        "weight": 152.5
+      },
+      {
+        "reps": 5,
+        "weight": 177.5
+      }]
+  }
+]}
