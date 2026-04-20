@@ -10,6 +10,14 @@ public class Exercise {
     private String description;
     private List<ExerciseSet> sets;
 
+    // ⭐ REQUIRED FOR JACKSON
+    public Exercise() {
+        this.name = "";
+        this.description = "";
+        this.imagePath = null;
+        this.sets = new ArrayList<>();
+    }
+
     public Exercise(String name, String description, String imagePath) {
         assert name != null && !name.isEmpty();
         assert description != null;
@@ -22,7 +30,7 @@ public class Exercise {
         checkInvariant();
     }
 
-    // For backwards compatibility with your old constructor
+    // For backwards compatibility
     public Exercise(String name, String description) {
         this(name, description, null);
     }
@@ -79,8 +87,13 @@ public class Exercise {
     }
 
     private void checkInvariant() {
-        assert name != null && !name.isEmpty();
+        assert name != null;
         assert description != null;
         assert sets != null;
     }
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

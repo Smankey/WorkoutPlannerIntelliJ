@@ -35,7 +35,11 @@ public class ExerciseSet {
     /**
      * No-arg constructor
      */
-    public ExerciseSet() {}
+    public ExerciseSet() {
+        this.reps = 0;
+        this.weight = 0f;
+        this.completedReps = 0;
+    }
 
     /**
      * Returns the number of repetitions to complete

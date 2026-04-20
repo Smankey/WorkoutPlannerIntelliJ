@@ -13,8 +13,17 @@ public class Workout {
     private String description;
     private List<Exercise> exercises;
 
-    // Timestamp for when the workout was created (GUI uses this for displaying active workout info)
+    // Timestamp for when the workout was created
     private LocalDateTime dateTime;
+
+    // ⭐ REQUIRED FOR JACKSON
+    public Workout() {
+        this.imagePath = null;
+        this.name = "";
+        this.description = "";
+        this.exercises = new ArrayList<>();
+        this.dateTime = LocalDateTime.now();
+    }
 
     // Create a workout with name and description
     public Workout(String name, String description) {
@@ -24,8 +33,6 @@ public class Workout {
         this.name = name;
         this.description = description;
         this.exercises = new ArrayList<>();
-
-        // Store creation time so the GUI can show when the workout was started
         this.dateTime = LocalDateTime.now();
 
         checkInvariant();
@@ -64,26 +71,31 @@ public class Workout {
         return description;
     }
 
-    // GUI expects getTitle() instead of getName(), so just return the same value
+    // GUI expects getTitle() instead of getName()
     public String getTitle() {
         return name;
     }
 
-    // Returns the timestamp for when the workout was created (GUI formats this with DateTimeFormatter)
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    // Ensure object state is valid
     private void checkInvariant() {
-        assert name != null && !name.isEmpty();
+        assert name != null;
         assert description != null;
         assert exercises != null;
     }
 
-    // Updates the workout description (used when editing a workout in the GUI)
     public void setDescription(String description) {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    public void setTitle(String title) {
+        this.name = title;
+    }
 }

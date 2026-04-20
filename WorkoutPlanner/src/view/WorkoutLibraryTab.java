@@ -72,11 +72,11 @@ public class WorkoutLibraryTab extends Tab {
         libraryHBox.setPadding(view.returnInsets());
         setContent(libraryHBox);
     }
+
     private VBox createWorkoutListVBox() {
         workoutListView = new WorkoutListView();
         workoutListView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 1) {
-                // Single-click: show workout details
                 Workout selected = workoutListView.getSelectedWorkout();
                 if (selected != null) {
                     updateExercisesAndSets(selected);
@@ -84,7 +84,6 @@ public class WorkoutLibraryTab extends Tab {
                 }
             }
             else if (e.getClickCount() == 2) {
-                // Double-click: open workout in a new tab
                 Workout selected = workoutListView.getSelectedWorkout();
                 if (selected != null) {
                     controller.openWorkoutInNewTab(selected);
@@ -109,11 +108,11 @@ public class WorkoutLibraryTab extends Tab {
         return workoutVBox;
     }
 
-/**
- * Helper-method for creating the VBox that shows the exercises of a workout.
- * @return The VBox
- */
-private VBox createExerciseListVBox() {
+    /**
+     * Helper-method for creating the VBox that shows the exercises of a workout.
+     * @return The VBox
+     */
+    private VBox createExerciseListVBox() {
 
         workoutName = new Label("Workout");
         workoutName.getStyleClass().add("subheading");
@@ -170,11 +169,11 @@ private VBox createExerciseListVBox() {
         return  exerciseVBox;
     }
 
-/**
- * Helper-method for creating the VBox that holds the set table that displays the sets of a exercise.
- * @return The VBox
- */
-private VBox createExerciseSetTableVBox() {
+    /**
+     * Helper-method for creating the VBox that holds the set table that displays the sets of a exercise.
+     * @return The VBox
+     */
+    private VBox createExerciseSetTableVBox() {
         exerciseTitleLabel = new Label("Exercise Sets");
         exerciseTitleLabel.getStyleClass().add("subheading");
         setTableView = new ExerciseSetTableView();
@@ -186,11 +185,10 @@ private VBox createExerciseSetTableVBox() {
             if (w == null || e == null) {
                 return;
             }
-            List<ExerciseSet> sets = e.getSets();
-            if (sets.isEmpty()) {
-                controller.addExerciseSet(w, e, 0,0);
-            } else {
-                controller.addExerciseSet(w, e, sets.getLast().getReps(), sets.getLast().getWeight());
+
+            int[] values = promptForNewSet();
+            if (values != null) {
+                controller.addExerciseSet(w, e, values[0], values[1]);
             }
         });
 
@@ -209,7 +207,6 @@ private VBox createExerciseSetTableVBox() {
         imageView = new ImageView();
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(200);
-        //imageView.setFitWidth(vboxWidth);
         imageView.setImage(placeholderImg);
 
         VBox setTableVBox = new VBox(exerciseTitleLabel, setTableView, addSetBtn, removeSetBtn,  imageView);
@@ -217,6 +214,33 @@ private VBox createExerciseSetTableVBox() {
         setTableVBox.setSpacing(2);
         setTableVBox.setAlignment(Pos.CENTER);
         return setTableVBox;
+    }
+
+    /**
+     * Dialog for entering reps + weight for a new set.
+     */
+    private int[] promptForNewSet() {
+        TextInputDialog repsDialog = new TextInputDialog();
+        repsDialog.setHeaderText("Enter number of repetitions");
+        repsDialog.setContentText("Reps:");
+
+        Optional<String> repsResult = repsDialog.showAndWait();
+        if (repsResult.isEmpty()) return null;
+
+        TextInputDialog weightDialog = new TextInputDialog();
+        weightDialog.setHeaderText("Enter weight in kg");
+        weightDialog.setContentText("Weight:");
+
+        Optional<String> weightResult = weightDialog.showAndWait();
+        if (weightResult.isEmpty()) return null;
+
+        try {
+            int reps = Integer.parseInt(repsResult.get());
+            int weight = Integer.parseInt(weightResult.get());
+            return new int[]{reps, weight};
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     /**
@@ -254,21 +278,17 @@ private VBox createExerciseSetTableVBox() {
         return buttonVBox;
     }
 
-/**
- * Method for opening the dialog for adding a new workout.
- * @return A string array that holds the workout name at index 0 and the description at index 1.
- */
-public String[] promptForNewWorkout() {
+    public String[] promptForNewWorkout() {
         WorkoutInputDialog dialog = new WorkoutInputDialog("New Workout", "Workout Name", "Workout Description");
 
         Optional<String[]> result = dialog.showAndWait();
         return result.orElse(null);
     }
 
-    /**
-     * Method that creates a dialog for checking if the user are sure about removing a workout.
-     * @return True if user wants to remove workout.
-     */
+    public void updateExerciseListView(List<Exercise> exercises) {
+        exerciseListView.getItems().setAll(exercises);
+    }
+
     public boolean promptForRemoveWorkout() {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("Remove Workout");
@@ -286,15 +306,10 @@ public String[] promptForNewWorkout() {
         return result.orElse(false);
     }
 
-
     public WorkoutListView getWorkoutListView() {
         return workoutListView;
     }
 
-    /**
-     * Method for updating exerciseListView, workout name label, workout description and the exerciseSetTableView with the given workout.
-     * @param workout the workout
-     */
     public void updateExercisesAndSets(Workout workout) {
         exerciseListView.display(workout.getExercises());
         workoutName.setText(workout.getTitle());
@@ -302,9 +317,6 @@ public String[] promptForNewWorkout() {
         clearSetTableVBox();
     }
 
-    /**
-    * Method for resetting the labels, listview and tableview.
-    */
     public void clearExercisesAndSets() {
         exerciseListView.clear();
         workoutName.setText("Workout");
@@ -312,65 +324,36 @@ public String[] promptForNewWorkout() {
         clearSetTableVBox();
     }
 
-    /**
-     * Method for updating the content of the name label and set table with the give exercise.
-     * @param e the exercise.
-     */
     public void updateSetTableVBox(Exercise e) {
         setTableView.display(e);
         exerciseTitleLabel.setText(e.getName());
     }
+
     public void clearSetTableVBox() {
         exerciseTitleLabel.setText("Exercise Sets");
         setTableView.clear();
     }
 
-    /**
-     * Method for setting the method to be called during button click.
-     * @param callback the method to be called.
-     */
     public void setOnAddExerciseButtonClicked(Runnable callback) {
         this.onAddExerciseButtonClicked = callback;
     }
 
-    /**
-     * Method for setting the method to be called during button click.
-     * @param callback The method to be called.
-     */
     public void setOnRemoveExerciseButtonClicked(Consumer<Exercise> callback) {
         this.onRemoveExerciseButtonClicked = callback;
     }
 
-    /**
-     * Method for setting the method to be called during button click.
-     * @param callback the method to be called.
-     */
     public void setOnAddWorkoutButtonClicked(Runnable callback) {
         this.onAddWorkoutButtonClicked = callback;
     }
 
-    /**
-     * Method for setting the method to be called during button click.
-     * @param callback the method to be called.
-     */
     public void setOnRemoveWorkoutButtonClicked(Consumer<Workout> callback) {
         this.onRemoveWorkoutButtonClicked = callback;
     }
 
-    /**
-     * Method for updating the list of workouts.
-     * @param templates the list of workouts.
-     */
     public void updateWorkoutListView(List<Workout> templates) {
-
         workoutListView.displayWorkouts(templates);
-
     }
 
-    /**
-     * Method for opening the dialog that lets the user pick exercises to add to a workout.
-     * @return A list of exercises.
-     */
     public List<Exercise> promptForAddingExercises() {
         ExercisePickerDialog dialog = new ExercisePickerDialog("Add Exercises", controller.getExerciseLibrary());
         Optional<List<Exercise>> result = dialog.showAndWait();

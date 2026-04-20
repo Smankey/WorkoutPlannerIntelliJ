@@ -21,26 +21,21 @@ public class WorkoutPlannerController {
         this.view = view;
     }
 
-
     public void registerManager(WorkoutManager manager) {
         this.manager = manager;
     }
-
 
     public void registerExerciseLibraryTab(ExerciseLibraryTab exerciseLibraryTab) {
         this.exerciseLibraryTab = exerciseLibraryTab;
     }
 
-
     public void registerLibraryTab(WorkoutLibraryTab workoutLibraryTab) {
         this.workoutLibraryTab = workoutLibraryTab;
     }
 
-
     public void registerActiveWorkoutTab(ActiveWorkoutTab activeWorkoutTab) {
         this.activeWorkoutTab = activeWorkoutTab;
     }
-
 
     /**
      * Method that adds a workout to the workout library and updated the view.
@@ -74,13 +69,13 @@ public class WorkoutPlannerController {
         List<Exercise> newExercises = workoutLibraryTab.promptForAddingExercises();
         Workout selectedWorkout = view.getSelectedWorkoutFromListView();
         if (selectedWorkout != null && newExercises != null) {
-            /*
-            TODO:
-                YOU WRITE THIS
-                Add the chosen exercises to the workout
-                AND
-                update the view to show the current exercises of the workout.
-             */
+
+
+            for (Exercise e : newExercises) {
+                selectedWorkout.addExercise(e);
+            }
+
+            workoutLibraryTab.updateExerciseListView(selectedWorkout.getExercises());
 
             if (view.hasActiveWorkoutTab(selectedWorkout)) {
                 view.getActiveWorkoutTab(selectedWorkout).displayExercises(selectedWorkout);
@@ -97,13 +92,11 @@ public class WorkoutPlannerController {
     public void handleRemoveExercise(Exercise exercise) {
         Workout selectedWorkout = view.getSelectedWorkoutFromListView();
         if (selectedWorkout != null) {
-            /*
-            TODO:
-                YOU WRITE THIS
-                Remove the exercise from the workout
-                AND
-                update the view to show the current exercises of the workout.
-            */
+
+
+            selectedWorkout.removeExercise(exercise);
+
+            workoutLibraryTab.updateExerciseListView(selectedWorkout.getExercises());
 
             if (view.hasActiveWorkoutTab(selectedWorkout)) {
                 view.getActiveWorkoutTab(selectedWorkout).displayExercises(selectedWorkout);
@@ -125,8 +118,6 @@ public class WorkoutPlannerController {
             activeWorkoutTab.displaySets(ex);
         }
         workoutLibraryTab.updateSetTableVBox(ex);
-
-
     }
 
     /**
@@ -143,7 +134,6 @@ public class WorkoutPlannerController {
         }
         workoutLibraryTab.updateSetTableVBox(ex);
     }
-
 
     /**
      * Method that handles the request of adding a new exercise to the exercise library.
@@ -180,7 +170,6 @@ public class WorkoutPlannerController {
      * @return The list of workouts from the file.
      */
     public List<Workout> loadWorkoutLibrary(File file,  String propertyName) {
-
         return WorkoutsReader.load(file, propertyName);
     }
 
