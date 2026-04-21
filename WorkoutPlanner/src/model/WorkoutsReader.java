@@ -24,5 +24,5 @@ public class WorkoutsReader {
     public static List<Workout> load(File file, String propertyName) {
         JsonNode root = mapper.readTree(file);
         return mapper.treeToValue(root.get(propertyName), new TypeReference<List<Workout>>() {});
-    }
+    }   
 }

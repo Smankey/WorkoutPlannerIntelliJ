@@ -16,7 +16,7 @@ public class Workout {
     // Timestamp for when the workout was created
     private LocalDateTime dateTime;
 
-    // ⭐ REQUIRED FOR JACKSON
+    // Addition required for JACKSON
     public Workout() {
         this.imagePath = null;
         this.name = "";

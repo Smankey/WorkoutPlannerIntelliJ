@@ -10,7 +10,7 @@ public class Exercise {
     private String description;
     private List<ExerciseSet> sets;
 
-    // ⭐ REQUIRED FOR JACKSON
+    // Additional required for JACKSON
     public Exercise() {
         this.name = "";
         this.description = "";
@@ -30,7 +30,6 @@ public class Exercise {
         checkInvariant();
     }
 
-    // For backwards compatibility
     public Exercise(String name, String description) {
         this(name, description, null);
     }
@@ -51,7 +50,7 @@ public class Exercise {
         checkInvariant();
     }
 
-    // GUI expects these names:
+    // What the GUI expects
     public void addExerciseSet(ExerciseSet set) {
         addSet(set);
     }
@@ -77,7 +76,7 @@ public class Exercise {
         this.description = description;
     }
 
-    // Image path getter/setter
+    // Image path getter
     public String getImagePath() {
         return imagePath;
     }

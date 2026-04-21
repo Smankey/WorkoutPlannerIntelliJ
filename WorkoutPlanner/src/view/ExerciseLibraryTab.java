@@ -89,12 +89,7 @@ public class ExerciseLibraryTab extends Tab {
         libraryListView.setOnMouseClicked(event -> {
             Exercise selected = libraryListView.getSelectedExercise();
             if(selected != null) {
-                /*
-                TODO:
-                    Display the name of the selected exercise on the designated Label
-                    AND
-                    display the description of the selected exercise in the designated TextArea.
-                 */
+
                 imgView.setImage(controller.getExerciseImages().get(selected.getName()));
             }
         });
