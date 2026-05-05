@@ -10,16 +10,14 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Class with static methods for handling loading and saving exercises from and to the exercise library JSON-file.
+ * loading and saving exercises
  */
 public class ExerciseLibraryManager {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
     /**
-     * Method for reading the exercises from a list in a json-file. See <a href="https://github.com/FasterXML/jackson-databind/">the GitHub page</a>
-     * on how to use it.
-     * @return A list of Exercise objects read from the file.
+     * reading the exercises from a list in a json-file.
      */
     public static List<Exercise> loadExercises() throws IOException {
         JsonNode root =  mapper.readTree(new File("exerciseLibrary/defaultExercises.json"));
@@ -27,8 +25,7 @@ public class ExerciseLibraryManager {
     }
 
     /**
-     * Method for saving the current exercise library to JSON format. See <a href="https://github.com/FasterXML/jackson-databind/">the GitHub page</a>
-     * on how to use it.
+     * saving the current exercise library to JSON format.
      */
     public static void saveExercises(List<Exercise> exercises) throws IOException {
         ObjectNode root = mapper.createObjectNode();
