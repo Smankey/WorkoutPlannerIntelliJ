@@ -11,9 +11,7 @@ import java.io.IOException;
 
 import java.io.File;
 
-/**
- * The main class of the application.
- */
+// The main class of the application.
 public class PlannerApplication extends Application {
 
     public static void main(String[] args) {
