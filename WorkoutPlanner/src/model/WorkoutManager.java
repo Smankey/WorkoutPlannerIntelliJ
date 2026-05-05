@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A class that handles all workouts, workout history and anything regarding the exercises.
- * Functions as an interface towards the controller.
+ * handles all workouts, workout history and anything regarding the exercises.
  */
 public class WorkoutManager {
     private List<Workout> workouts;
@@ -25,7 +24,7 @@ public class WorkoutManager {
             exerciseLibrary = ExerciseLibraryManager.loadExercises();
         } catch (IOException e) {
             e.printStackTrace();
-            exerciseLibrary = new ArrayList<>(); // fallback så appen inte kraschar
+            exerciseLibrary = new ArrayList<>(); // fallback so the app doesn't crash
         }
 
         exerciseImages = ImageLoader.loadExerciseImages(exerciseLibrary);
@@ -33,9 +32,7 @@ public class WorkoutManager {
 
 
     /**
-     * Method for adding a workout to the workout planner.
-     * @param title the title of the new workout.
-     * @param description the description of the new workout.
+     adding a workout to the workout planner.
      */
     public void addWorkout(String title, String description) {
         Workout w = new Workout(title, description);
@@ -43,17 +40,14 @@ public class WorkoutManager {
     }
 
     /**
-     * Method for removing a workout from the workout planner.
-     * @param workout the workout to remove.
+     * removing a workout from the workout planner.
      */
     public void removeWorkout(Workout workout) {
         workouts.remove(workout);
     }
 
     /**
-     * Method for adding existing exercises from the exercise library to a workout.
-     * @param workout the workout to which to add the exercises.
-     * @param exercises the exercises to add.
+     adding existing exercises from the exercise library to a workout.
      */
     public void addExercise(Workout workout, List<Exercise> exercises) {
         for (Exercise e : exercises) {
@@ -62,19 +56,14 @@ public class WorkoutManager {
     }
 
         /**
-         * Method for removing an exercise from a workout.
-         * @param workout the workout which the exercise is to be removed from.
-         * @param exercise the exercise to remove.
+         removing an exercise from a workout.
          */
     public void removeExercise(Workout workout, Exercise exercise) {
             workout.removeExercise(exercise);
     }
 
     /**
-     * Method for adding a set to an exercise.
-     * @param exercise the exercise.
-     * @param reps repetitions of the set.
-     * @param weight weight in kg of the set.
+     adding a set to an exercise.
      */
     public void addSetToExercise(Exercise exercise, int reps, float weight) {
             ExerciseSet set = new ExerciseSet(reps, weight);
@@ -82,38 +71,26 @@ public class WorkoutManager {
     }
 
     /**
-     * Method for removing an exercise set from an exercise.
-     * @param exercise the exercise.
-     * @param exerciseSet the set to remove.
+     removing an exercise set from an exercise.
      */
     public void removeSetFromExercise(Exercise exercise, ExerciseSet exerciseSet) {
             exercise.removeExerciseSet(exerciseSet);
     }
 
     /**
-     * Method for adding a new exercise to the exercise library.
-     * @param name name of the exercise.
-     * @param description description for the exercise.
-     * @param imagePath path to a local image file or URL to an online image.
+     adding a new exercise to the exercise library.
      */
     public void addExerciseToLibrary(String name, String description, String imagePath) {
         exerciseLibrary.add(new Exercise(name, description, imagePath));
     }
 
     /**
-     * Method for removing an exercise from the exercise library.
-     * @param exercise the exercise to remove.
+     removing an exercise from the exercise library.
      */
     public void removeExerciseFromLibrary(Exercise exercise) {
         exerciseLibrary.remove(exercise);
     }
 
-
-    /*
-     * ********************
-     * GETTERS AND SETTERS
-     * ********************
-     */
 
     public List<Workout> getWorkouts() {
         return workouts;
