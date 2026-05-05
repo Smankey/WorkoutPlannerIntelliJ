@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * handles all workouts, workout history and anything regarding the exercises.
- */
+// handles all workouts, workout history and anything regarding the exercises.
 public class WorkoutManager {
     private List<Workout> workouts;
 
@@ -31,62 +29,46 @@ public class WorkoutManager {
     }
 
 
-    /**
-     adding a workout to the workout planner.
-     */
+    // adding a workout to the workout planner.
     public void addWorkout(String title, String description) {
         Workout w = new Workout(title, description);
         workouts.add(w);
     }
 
-    /**
-     * removing a workout from the workout planner.
-     */
+    // removing a workout from the workout planner.
     public void removeWorkout(Workout workout) {
         workouts.remove(workout);
     }
 
-    /**
-     adding existing exercises from the exercise library to a workout.
-     */
+    // adding existing exercises from the exercise library to a workout.
     public void addExercise(Workout workout, List<Exercise> exercises) {
         for (Exercise e : exercises) {
             workout.addExercise(e);
         }
     }
 
-        /**
-         removing an exercise from a workout.
-         */
+        // removing an exercise from a workout.
     public void removeExercise(Workout workout, Exercise exercise) {
             workout.removeExercise(exercise);
     }
 
-    /**
-     adding a set to an exercise.
-     */
+    // adding a set to an exercise.
     public void addSetToExercise(Exercise exercise, int reps, float weight) {
             ExerciseSet set = new ExerciseSet(reps, weight);
             exercise.addExerciseSet(set);
     }
 
-    /**
-     removing an exercise set from an exercise.
-     */
+    // removing an exercise set from an exercise.
     public void removeSetFromExercise(Exercise exercise, ExerciseSet exerciseSet) {
             exercise.removeExerciseSet(exerciseSet);
     }
 
-    /**
-     adding a new exercise to the exercise library.
-     */
+    // adding a new exercise to the exercise library
     public void addExerciseToLibrary(String name, String description, String imagePath) {
         exerciseLibrary.add(new Exercise(name, description, imagePath));
     }
 
-    /**
-     removing an exercise from the exercise library.
-     */
+    // removing an exercise from the exercise library.
     public void removeExerciseFromLibrary(Exercise exercise) {
         exerciseLibrary.remove(exercise);
     }
