@@ -9,9 +9,7 @@ import model.Workout;
 
 import java.util.HashMap;
 
-/**
- * Class that represents the main view of the application. Holds references to the other view elements.
- */
+// main view of the application, Holds references to the other view elements.
 public class WorkoutPlannerView extends VBox {
 
     private WorkoutPlannerController controller;
@@ -89,35 +87,15 @@ public class WorkoutPlannerView extends VBox {
         return stage;
     }
 
-    /*
-     * ***************************************************
-     * Methods to be called in regard to WorkoutListView
-     * ***************************************************
-     */
-
     public Workout getSelectedWorkoutFromListView() {
         return workoutLibraryTab.getWorkoutListView().getSelectedWorkout();
     }
-
-    /*
-     * *************************************
-     * Methods to be called from LibraryTab
-     * *************************************
-     */
 
     public Insets returnInsets() {
         return insets;
     }
 
-    /*
-     * *************************
-     * ActiveWorkoutTab-methods
-     * *************************
-     */
-
-    /**
-     * Method for adding a new active workout tab to the tab pane.
-     */
+    // adding a new active workout tab to the tab pane.
     public void addWorkoutTab(Workout workout) {
         ActiveWorkoutTab newTab = new ActiveWorkoutTab(this, workout, controller);
         if (!activeWorkoutTabs.containsKey(workout)) {
@@ -126,9 +104,7 @@ public class WorkoutPlannerView extends VBox {
         }
     }
 
-    /**
-     * Method for removing a active workout tab from the tab pane.
-     */
+    // removing a active workout tab from the tab pane.
     public void removeWorkoutTab(Workout workout) {
         if (activeWorkoutTabs.containsKey(workout)) {
             tabPane.getTabs().remove(activeWorkoutTabs.get(workout));
@@ -136,20 +112,14 @@ public class WorkoutPlannerView extends VBox {
         }
     }
 
-    /**
-     * Method for getting the tab that is associated with the given workout.
-     * @param workout the workout
-     * @return The ActiveWorkoutTab, if it exists.
-     */
+    // getting the tab that is associated with the given workout
+     
     public ActiveWorkoutTab getActiveWorkoutTab(Workout workout) {
         return activeWorkoutTabs.get(workout);
     }
 
-    /**
-     * Method for checking if the given workout is already open in an existing active workout tab.
-     * @param workout The workout
-     * @return True if an existing tab is linked to the given workout.
-     */
+    // checking if the given workout is already open in an existing active workout tab.
+     
     public boolean hasActiveWorkoutTab(Workout workout) {
         return activeWorkoutTabs.containsKey(workout);
     }
@@ -158,10 +128,8 @@ public class WorkoutPlannerView extends VBox {
         messageArea.setText(message);
     }
 
-    /**
-     * Opens a workout in a new ActiveWorkoutTab.
-     * This is the ONLY added method — original code untouched.
-     */
+    // opens a workout in a new ActiveWorkoutTab.
+     
     public void openWorkoutTab(Workout workout) {
 
         // If already open, switch to it
