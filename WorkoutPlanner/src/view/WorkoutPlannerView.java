@@ -34,6 +34,24 @@ public class WorkoutPlannerView extends VBox {
         this.controller = controller;
         this.stage = stage;
 
+        MenuBar menuBar = new MenuBar();
+        Menu fileMenu = new Menu("File");
+
+        MenuItem saveItem = new MenuItem("Save");
+        MenuItem loadItem = new MenuItem("Load");
+        MenuItem exitItem = new MenuItem("Exit");
+
+        fileMenu.getItems().addAll(saveItem, loadItem, exitItem);
+        menuBar.getMenus().add(fileMenu);
+
+        // Lägg menyn överst i VBox
+        this.getChildren().add(menuBar);
+
+        // Koppla till controller
+        saveItem.setOnAction(e -> controller.handleSave());
+        loadItem.setOnAction(e -> controller.handleLoad());
+        exitItem.setOnAction(e -> stage.close());
+
         activeWorkoutTabs = new HashMap<>();
 
         messageArea = new TextArea();

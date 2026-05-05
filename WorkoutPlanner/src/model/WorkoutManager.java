@@ -2,6 +2,7 @@ package model;
 
 import javafx.scene.image.Image;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,17 @@ public class WorkoutManager {
 
     public WorkoutManager() {
         workouts = new ArrayList<>();
-        exerciseLibrary = ExerciseLibraryManager.loadExercises();
+
+        try {
+            exerciseLibrary = ExerciseLibraryManager.loadExercises();
+        } catch (IOException e) {
+            e.printStackTrace();
+            exerciseLibrary = new ArrayList<>(); // fallback så appen inte kraschar
+        }
+
         exerciseImages = ImageLoader.loadExerciseImages(exerciseLibrary);
     }
+
 
     /**
      * Method for adding a workout to the workout planner.

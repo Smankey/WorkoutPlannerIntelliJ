@@ -4,8 +4,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.WorkoutManager;
-import tools.jackson.core.exc.JacksonIOException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import view.WorkoutPlannerView;
+
+import java.io.IOException;
 
 import java.io.File;
 
@@ -28,9 +30,9 @@ public class PlannerApplication extends Application {
 
         File workouts = new File("workoutLibrary/workouts.json");
         try {
-            manager.setWorkouts(plannerController.loadWorkoutLibrary(workouts, "workoutLibrary"));
+            manager.setWorkouts(plannerController.loadWorkoutLibrary(workouts));
 
-        } catch (JacksonIOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
